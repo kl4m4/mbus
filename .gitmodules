@@ -1,0 +1,3 @@
+[submodule "external/modbus-tk"]
+	path = external/modbus-tk
+	url = https://github.com/ljean/modbus-tk.git
