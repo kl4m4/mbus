@@ -2,7 +2,7 @@ import modbus_tk
 import modbus_tk.defines as cst
 from modbus_tk import modbus_tcp
 
-server = modbus_tcp.Server()
+server = modbus_tcp.Server(port=502, address='127.0.0.1')
 server.start()
 slave1 = server.add_slave(1)
 slave1.add_block('0', cst.HOLDING_REGISTERS, 0, 10)

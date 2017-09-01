@@ -1,3 +1,6 @@
 [submodule "external/modbus-tk"]
 	path = external/modbus-tk
 	url = https://github.com/ljean/modbus-tk.git
+[submodule "external/pymodbus"]
+	path = external/pymodbus
+	url = https://github.com/riptideio/pymodbus.git
