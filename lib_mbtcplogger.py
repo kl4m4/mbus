@@ -66,33 +66,26 @@ class IndexTag(cTag):
     
 class MBInterface(ModbusClient):
     def __init__(self):
-        clientslist = []
+        self.clientslist = []
     def Query(self, ip, port, unit, querytype, address):
         print("Zapytanie modbusowe do {0}:{1} unit={2} type={3} address={4}".format(ip, port, unit, querytype, address))
-        return 234.5
-    
-# class cTagMB(object, cTag):
-    # def __init__(self, source_ip, source_port, source_unit, source_type, source_addr, tag_name, tag_desc):
-        # logging.basicConfig()
-        # log = logging.getLogger()
-        # log.debug("cTag __init__")
-        # self.source_ip = source_ip
-        # self.source_port = source_port
-        # self.source_unit = source_unit
-        # self.source_type = source_type
-        # self.source_addr = source_addr
-        # self.tag_name = tag_name
-        # self.tag_desc = tag_desc
-        # self.tag_value = '---'
+        got_it = False
+        client_to_use = None
+        for cl in self.clientslist:
+            if cl.host == ip:
+                # uzyj tego obiektu klienta
+                print("mam juz tego clienta")
+                got_it = True
+                client_to_use = cl
+        if got_it == False:
+            print("jeszcze nie mam klienta")
+            client_to_use = ModbusClient(ip,port)
+            self.clientslist.append(client_to_use)
         
-    # def __str__(self):
-        # return "{0}:{1} unit={2} type={3} offset={4} name={5} desc={6} value={7}".format(self.source_ip, self.source_port, self.source_unit, self.source_type, self.source_addr, self.tag_name, self.tag_desc)
-    
-    # def getValue(self):
-        # return self.tag_value
-    
-    # def setValue(self, value):
-        # self.tag_value(value)
+        print("uzyje klienta dla hosta {0}".format(client_to_use.host))
+        
+        return 234.5
+
 
 class cConfReader(object):
     def __init__(self, filepath):
