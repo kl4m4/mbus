@@ -104,16 +104,16 @@ class cConfReader(object):
         self.tagslist = []
         self.config = configparser.ConfigParser()
         self.config.read(filepath)
-        logging.basicConfig()
-        log = logging.getLogger()
-        log.debug("cConfReader __init__()")
+        self.poll_interval_ms = -1
+        self.delimiter_char = ';' # default ;
+        logging.debug("cConfReader __init__()")
         
         try:
             self.config.defaults()['tags_list']
         except:
-            log.debug("ini file error")
+            logging.error("cConfReader ini file error - exiting!")
             exit()
-        log.debug("ini file read")
+        logging.debug("cConfReader ini file read")
         
     def Parse(self):
         logging.basicConfig()
@@ -134,5 +134,8 @@ class cConfReader(object):
             tmp.selfConfig(self.filepath)
             self.tagslist.append(tmp)
             
+        # read some common parameters:
+        self.poll_interval_ms = self.config.defaults()['poll_interval_ms']
+        self.delimiter_char = self.config.defaults()['delimiter_char]
     def getTagsList(self):
         return self.tagslist
